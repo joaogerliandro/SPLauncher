@@ -22,6 +22,7 @@ public:
 
 private:
     QString file_path;
+    QString directory_path;
 
 private slots:
     void on_start_button_clicked();
