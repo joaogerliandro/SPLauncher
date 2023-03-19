@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>SPLauncher</string>
+   <string>SPLauncher (Version 0.1-Alpha)</string>
   </property>
   <property name="iconSize">
    <size>
