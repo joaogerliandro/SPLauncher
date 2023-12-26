@@ -8,6 +8,8 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
+#include <add_game_dialog.h>
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -28,6 +30,8 @@ private slots:
     void on_start_button_clicked();
 
     void on_open_file_button_clicked();
+
+    void on_add_button_clicked();
 
 private:
     Ui::MainWindow *ui;

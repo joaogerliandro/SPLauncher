@@ -34,3 +34,11 @@ void MainWindow::on_open_file_button_clicked()
     if(!file_path.isEmpty())
         ui->file_path->setText(file_path);*/
 }
+
+void MainWindow::on_add_button_clicked()
+{
+    AddGameDialog *add_game_dialog = new AddGameDialog(this);
+
+    add_game_dialog->show();
+}
+
