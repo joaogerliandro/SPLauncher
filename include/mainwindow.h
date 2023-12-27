@@ -8,10 +8,12 @@
 #include <QMessageBox>
 #include <QTableWidgetItem>
 
+#include <vector>
 #include <string>
 #include <fstream>
 #include <sstream>
 
+#include <gameitem.h>
 #include <add_game_dialog.h>
 
 QT_BEGIN_NAMESPACE
@@ -29,11 +31,15 @@ public:
 private slots:
     void on_start_button_clicked();
 
-    void load_game_list(std::string_view file_stream = { "game_list.txt" });
-
     void on_add_button_clicked();
 
 private:
     Ui::MainWindow *ui;
+
+    std::vector<GameItem> game_item_list;
+
+    void load_game_list();
+
+    void load_game_list_file(std::string_view file_stream = { "game_list.txt" });
 };
 #endif // MAINWINDOW_H
