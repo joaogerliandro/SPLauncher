@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QFileDialog>
+#include <QMessageBox>
 
 #include <gameitem.h>
 

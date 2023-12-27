@@ -36,6 +36,11 @@ void AddGameDialog::on_confirm_button_clicked()
         this->close();
         emit add_game_item(new_game_item);
     }
+    else
+    {
+        QMessageBox *message_box = new QMessageBox(QMessageBox::Icon::Warning, "Invalid input !", "Enter all fields correctly !", QMessageBox::Button::Ok, this);
+        message_box->open();
+    }
 }
 
 void AddGameDialog::on_cancel_button_clicked()

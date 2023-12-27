@@ -116,6 +116,11 @@ void MainWindow::on_start_button_clicked()
 
         this->close();
     }
+    else
+    {
+        QMessageBox *message_box = new QMessageBox(QMessageBox::Icon::Warning, "Invalid Action !", "Select a game to start !", QMessageBox::Button::Ok, this);
+        message_box->open();
+    }
 }
 
 void MainWindow::on_add_button_clicked()
@@ -161,27 +166,36 @@ void MainWindow::on_remove_button_clicked()
 
     if(selected_game_item != nullptr)
     {
-        std::vector<GameItem>::iterator selected_game_itr = game_item_list.begin();
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(this, "Remove Action !", "Do you really want to remove this item ?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
 
-        for(GameItem game_item : game_item_list)
+        if (reply == QMessageBox::Yes)
         {
-            if(game_item.m_name != selected_game_item->m_name)
+            std::vector<GameItem>::iterator selected_game_itr = game_item_list.begin();
+
+            for(GameItem game_item : game_item_list)
             {
-                selected_game_itr++;
+                if(game_item.m_name != selected_game_item->m_name)
+                {
+                    selected_game_itr++;
+                }
+                else
+                {
+                    break;
+                }
             }
-            else
-            {
-                break;
-            }
+
+            game_item_list.erase(selected_game_itr);
+
+            reload_game_list_grid();
+
+            update_game_list_file();
         }
-
-        game_item_list.erase(selected_game_itr);
-
-        reload_game_list_grid();
     }
     else
     {
-        std::cout << "Não" << std::endl;
+        QMessageBox *message_box = new QMessageBox(QMessageBox::Icon::Warning, "Invalid Action !", "Select a game to remove !", QMessageBox::Button::Ok, this);
+        message_box->open();
     }
 }
 
@@ -193,19 +207,14 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
 
 void MainWindow::update_game_list_file(std::string_view file_stream)
 {
-    std::fstream game_list_file(file_stream.data());
+    std::ofstream game_list_file(file_stream.data(), std::ofstream::trunc);
 
-    if(!game_list_file.is_open())
-    {
-        game_list_file.open(file_stream.data(), std::fstream::in | std::fstream::out | std::fstream::trunc);
-
-        if(!game_list_file.is_open())
-            throw "[ERROR]: Unable to create file ! Leaving the program ...";
-    }
+    if(game_item_list.empty())
+        game_list_file << "";
     else
     {
         for(GameItem game_item : game_item_list)
-            game_list_file << std::string(game_item.m_name.toStdString() + " " + game_item.m_file_path.toStdString());
+            game_list_file << std::string(game_item.m_name.toStdString() + " " + game_item.m_file_path.toStdString() + "\n");
     }
 
     game_list_file.close();
