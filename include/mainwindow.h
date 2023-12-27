@@ -5,8 +5,12 @@
 
 #include <QMainWindow>
 #include <QProcess>
-#include <QFileDialog>
 #include <QMessageBox>
+#include <QTableWidgetItem>
+
+#include <string>
+#include <fstream>
+#include <sstream>
 
 #include <add_game_dialog.h>
 
@@ -22,14 +26,10 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-private:
-    QString file_path;
-    QString directory_path;
-
 private slots:
     void on_start_button_clicked();
 
-    void on_open_file_button_clicked();
+    void load_game_list(std::string_view file_stream = { "game_list.txt" });
 
     void on_add_button_clicked();
 

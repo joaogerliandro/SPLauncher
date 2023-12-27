@@ -87,7 +87,7 @@
        <number>10</number>
       </property>
       <item>
-       <widget class="QListWidget" name="game_list"/>
+       <widget class="QTableWidget" name="game_list"/>
       </item>
       <item>
        <widget class="QPushButton" name="start_button">
