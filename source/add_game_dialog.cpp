@@ -25,3 +25,14 @@ void AddGameDialog::on_select_file_button_clicked()
         ui->file_path->setText(file_path);
 }
 
+void AddGameDialog::on_confirm_button_clicked()
+{
+    QString game_name = ui->game_name->text();
+    QString game_file_path = ui->file_path->text();
+
+    if(!game_name.isEmpty() && !game_file_path.isEmpty())
+    {
+        emit add_game_item(game_name, game_file_path);
+    }
+}
+

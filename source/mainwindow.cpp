@@ -7,6 +7,10 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    add_game_dialog = new AddGameDialog();
+
+    connect(add_game_dialog, &add_game_dialog->add_game_item, this, &this->add_game_item);
+
     load_game_list();
 }
 
@@ -48,22 +52,8 @@ void MainWindow::load_game_list_file(std::string_view file_stream)
     game_list_file.close();
 }
 
-void MainWindow::load_game_list()
+void MainWindow::load_game_list_grid()
 {
-    QStringList header_labels;
-    header_labels << "Title" << "File Path";
-
-    ui->game_list->setColumnCount(2);
-    ui->game_list->setHorizontalHeaderLabels(header_labels);
-    ui->game_list->horizontalHeader()->setStretchLastSection(true);
-    ui->game_list->horizontalHeader()->setSectionResizeMode (QHeaderView::Fixed);
-    ui->game_list->setSelectionBehavior(QAbstractItemView::SelectRows);
-    ui->game_list->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    ui->game_list->setFocusPolicy(Qt::NoFocus);
-    ui->game_list->verticalHeader()->hide();
-
-    load_game_list_file();
-
     for(GameItem game_item : game_item_list)
     {
         int row_count = ui->game_list->rowCount();
@@ -81,6 +71,25 @@ void MainWindow::load_game_list()
     }
 }
 
+void MainWindow::load_game_list()
+{
+    QStringList header_labels;
+    header_labels << "Title" << "File Path";
+
+    ui->game_list->setColumnCount(2);
+    ui->game_list->setHorizontalHeaderLabels(header_labels);
+    ui->game_list->horizontalHeader()->setStretchLastSection(true);
+    ui->game_list->horizontalHeader()->setSectionResizeMode (QHeaderView::Fixed);
+    ui->game_list->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->game_list->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->game_list->setFocusPolicy(Qt::NoFocus);
+    ui->game_list->verticalHeader()->hide();
+
+    load_game_list_file();
+
+    load_game_list_grid();
+}
+
 void MainWindow::on_start_button_clicked()
 {
     /*if(!file_path.isEmpty())
@@ -93,8 +102,13 @@ void MainWindow::on_start_button_clicked()
 
 void MainWindow::on_add_button_clicked()
 {
-    AddGameDialog *add_game_dialog = new AddGameDialog(this);
-
     add_game_dialog->show();
 }
+
+void MainWindow::add_game_item(QString game_name, QString file_path)
+{
+    std::cout << "Recebido !" << std::endl;
+}
+
+
 

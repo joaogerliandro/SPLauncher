@@ -24,22 +24,29 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
-public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    public:
+        MainWindow(QWidget *parent = nullptr);
+        ~MainWindow();
 
-private slots:
-    void on_start_button_clicked();
+    public slots:
+        void add_game_item(QString game_name, QString file_path);
 
-    void on_add_button_clicked();
+    private slots:
+        void on_start_button_clicked();
 
-private:
-    Ui::MainWindow *ui;
+        void on_add_button_clicked();
 
-    std::vector<GameItem> game_item_list;
+    private:
+        Ui::MainWindow *ui;
 
-    void load_game_list();
+        AddGameDialog *add_game_dialog;
 
-    void load_game_list_file(std::string_view file_stream = { "game_list.txt" });
+        std::vector<GameItem> game_item_list;
+
+        void load_game_list_file(std::string_view file_stream = { "game_list.txt" });
+
+        void load_game_list_grid();
+
+        void load_game_list();
 };
 #endif // MAINWINDOW_H

@@ -16,12 +16,18 @@ public:
     explicit AddGameDialog(QWidget *parent = nullptr);
     ~AddGameDialog();
 
+signals:
+    void add_game_item(QString game_name, QString file_path);
+
 private slots:
     void on_select_file_button_clicked();
+
+    void on_confirm_button_clicked();
 
 private:
     Ui::AddGameDialog *ui;
     QString file_path;
+    QString game_name;
     QString directory_path;
 };
 
