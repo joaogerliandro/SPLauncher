@@ -15,11 +15,7 @@ AddGameDialog::~AddGameDialog()
 
 void AddGameDialog::on_select_file_button_clicked()
 {
-    file_path = QFileDialog::getOpenFileName(this, "Open a file", ".", "Executable (*.exe)");
-
-    QDir file_dir = QFileInfo(file_path).absoluteDir();
-
-    directory_path = file_dir.absolutePath();
+    QString file_path = QFileDialog::getOpenFileName(this, "Open a file", ".", "Executable (*.exe)");
 
     if(!file_path.isEmpty())
         ui->file_path->setText(file_path);

@@ -102,12 +102,20 @@ void MainWindow::reload_game_list_grid()
 
 void MainWindow::on_start_button_clicked()
 {
-    /*if(!file_path.isEmpty())
+    GameItem *selected_game_item = get_selected_game_item();
+
+    if(selected_game_item != nullptr)
     {
+        QString file_path = selected_game_item->m_file_path;
+
+        QDir file_dir = QFileInfo(file_path).absoluteDir();
+
+        QString directory_path = file_dir.absolutePath();
+
         QProcess::startDetached(file_path, QStringList(), directory_path);
 
         this->close();
-    }*/
+    }
 }
 
 void MainWindow::on_add_button_clicked()

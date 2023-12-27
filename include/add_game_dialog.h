@@ -32,9 +32,6 @@ class AddGameDialog : public QDialog
 
     private:
         Ui::AddGameDialog *ui;
-        QString file_path;
-        QString game_name;
-        QString directory_path;
 };
 
 #endif // ADD_GAME_DIALOG_H
