@@ -205,6 +205,18 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
         ui->game_list->clearSelection();
 }
 
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    if(event->key() == Qt::Key_Delete)
+    {
+        on_remove_button_clicked();
+    }
+    else if(event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter)
+    {
+        on_start_button_clicked();
+    }
+}
+
 void MainWindow::update_game_list_file(std::string_view file_stream)
 {
     std::ofstream game_list_file(file_stream.data(), std::ofstream::trunc);
