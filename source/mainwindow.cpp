@@ -73,7 +73,6 @@ void MainWindow::load_game_list_grid()
 
 void MainWindow::load_game_list()
 {
-    QStringList header_labels;
     header_labels << "Title" << "File Path";
 
     ui->game_list->setColumnCount(2);
@@ -81,11 +80,22 @@ void MainWindow::load_game_list()
     ui->game_list->horizontalHeader()->setStretchLastSection(true);
     ui->game_list->horizontalHeader()->setSectionResizeMode (QHeaderView::Fixed);
     ui->game_list->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->game_list->setSelectionMode(QAbstractItemView::SingleSelection);
     ui->game_list->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->game_list->setFocusPolicy(Qt::NoFocus);
     ui->game_list->verticalHeader()->hide();
 
     load_game_list_file();
+
+    load_game_list_grid();
+}
+
+void MainWindow::reload_game_list_grid()
+{
+    ui->game_list->clear();
+    ui->game_list->setRowCount(0);
+
+    ui->game_list->setHorizontalHeaderLabels(header_labels);
 
     load_game_list_grid();
 }
@@ -107,8 +117,66 @@ void MainWindow::on_add_button_clicked()
 
 void MainWindow::add_game_item(GameItem new_game_item)
 {
-    std::cout << "Recebido !" << std::endl;
+    game_item_list.push_back(new_game_item);
+
+    reload_game_list_grid();
 }
 
+GameItem* MainWindow::get_selected_game_item()
+{
+    QItemSelectionModel *select = ui->game_list->selectionModel();
+    QAbstractItemModel *model = ui->game_list->model();
 
+    if(select->hasSelection())
+    {
+        QModelIndexList index_list = select->selectedRows();
 
+        for(QModelIndex index : index_list)
+        {
+            QModelIndex game_name_model = model->index(index.row(), 0);
+            QModelIndex file_path_model = model->index(index.row(), 1);
+
+            return new GameItem(game_name_model.data().toString(), file_path_model.data().toString());
+        }
+    }
+    else
+    {
+        return nullptr;
+    }
+}
+
+void MainWindow::on_remove_button_clicked()
+{
+    GameItem *selected_game_item = get_selected_game_item();
+
+    if(selected_game_item != nullptr)
+    {
+        std::vector<GameItem>::iterator selected_game_itr = game_item_list.begin();
+
+        for(GameItem game_item : game_item_list)
+        {
+            if(game_item.m_name != selected_game_item->m_name)
+            {
+                selected_game_itr++;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        game_item_list.erase(selected_game_itr);
+
+        reload_game_list_grid();
+    }
+    else
+    {
+        std::cout << "Não" << std::endl;
+    }
+}
+
+void MainWindow::mousePressEvent(QMouseEvent *event)
+{
+    if (!ui->game_list->indexAt(event->pos()).isValid())
+        ui->game_list->clearSelection();
+}

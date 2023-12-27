@@ -33,7 +33,26 @@ void AddGameDialog::on_confirm_button_clicked()
     if(!game_name.isEmpty() && !game_file_path.isEmpty())
     {
         GameItem new_game_item(game_name, game_file_path);
+
+        ui->game_name->clear();
+        ui->file_path->clear();
+
+        this->close();
         emit add_game_item(new_game_item);
     }
+}
+
+void AddGameDialog::on_cancel_button_clicked()
+{
+    ui->game_name->clear();
+    ui->file_path->clear();
+
+    this->close();
+}
+
+void AddGameDialog::on_AddGameDialog_finished(int result)
+{
+    ui->game_name->clear();
+    ui->file_path->clear();
 }
 

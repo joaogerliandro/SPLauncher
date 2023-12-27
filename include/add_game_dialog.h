@@ -14,23 +14,27 @@ class AddGameDialog : public QDialog
 {
     Q_OBJECT
 
-public:
-    explicit AddGameDialog(QWidget *parent = nullptr);
-    ~AddGameDialog();
+    public:
+        explicit AddGameDialog(QWidget *parent = nullptr);
+        ~AddGameDialog();
 
-signals:
-    void add_game_item(GameItem new_game_item);
+    signals:
+        void add_game_item(GameItem new_game_item);
 
-private slots:
-    void on_select_file_button_clicked();
+    private slots:
+        void on_select_file_button_clicked();
 
-    void on_confirm_button_clicked();
+        void on_confirm_button_clicked();
 
-private:
-    Ui::AddGameDialog *ui;
-    QString file_path;
-    QString game_name;
-    QString directory_path;
+        void on_cancel_button_clicked();
+
+        void on_AddGameDialog_finished(int result);
+
+    private:
+        Ui::AddGameDialog *ui;
+        QString file_path;
+        QString game_name;
+        QString directory_path;
 };
 
 #endif // ADD_GAME_DIALOG_H

@@ -7,6 +7,7 @@
 #include <QProcess>
 #include <QMessageBox>
 #include <QTableWidgetItem>
+#include <QMouseEvent>
 
 #include <vector>
 #include <string>
@@ -36,8 +37,14 @@ class MainWindow : public QMainWindow
 
         void on_add_button_clicked();
 
+        void on_remove_button_clicked();
+
+        void mousePressEvent(QMouseEvent *event);
+
     private:
         Ui::MainWindow *ui;
+
+        QStringList header_labels;
 
         AddGameDialog *add_game_dialog;
 
@@ -48,5 +55,9 @@ class MainWindow : public QMainWindow
         void load_game_list_grid();
 
         void load_game_list();
+
+        void reload_game_list_grid();
+
+        GameItem* get_selected_game_item();
 };
 #endif // MAINWINDOW_H
