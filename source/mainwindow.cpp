@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     add_game_dialog = new AddGameDialog();
 
-    connect(add_game_dialog, &add_game_dialog->add_game_item, this, &this->add_game_item);
+    connect(add_game_dialog, SIGNAL(add_game_item(GameItem)), this, SLOT(add_game_item(GameItem)));
 
     load_game_list();
 }
@@ -105,7 +105,7 @@ void MainWindow::on_add_button_clicked()
     add_game_dialog->show();
 }
 
-void MainWindow::add_game_item(QString game_name, QString file_path)
+void MainWindow::add_game_item(GameItem new_game_item)
 {
     std::cout << "Recebido !" << std::endl;
 }

@@ -29,7 +29,7 @@ class MainWindow : public QMainWindow
         ~MainWindow();
 
     public slots:
-        void add_game_item(QString game_name, QString file_path);
+        void add_game_item(GameItem new_game_item);
 
     private slots:
         void on_start_button_clicked();

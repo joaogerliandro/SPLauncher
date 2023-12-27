@@ -4,6 +4,8 @@
 #include <QDialog>
 #include <QFileDialog>
 
+#include <gameitem.h>
+
 namespace Ui {
 class AddGameDialog;
 }
@@ -17,7 +19,7 @@ public:
     ~AddGameDialog();
 
 signals:
-    void add_game_item(QString game_name, QString file_path);
+    void add_game_item(GameItem new_game_item);
 
 private slots:
     void on_select_file_button_clicked();
