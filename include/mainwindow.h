@@ -59,5 +59,7 @@ class MainWindow : public QMainWindow
         void reload_game_list_grid();
 
         GameItem* get_selected_game_item();
+
+        void update_game_list_file(std::string_view file_stream = { "game_list.txt" });
 };
 #endif // MAINWINDOW_H

@@ -28,7 +28,7 @@ void MainWindow::load_game_list_file(std::string_view file_stream)
         game_list_file.open(file_stream.data(), std::fstream::in | std::fstream::out | std::fstream::trunc);
 
         if(!game_list_file.is_open())
-            throw "[ERROR]: Unable to create settings file ! Leaving the program ...";
+            throw "[ERROR]: Unable to create file ! Leaving the program ...";
     }
     else
     {
@@ -128,6 +128,8 @@ void MainWindow::add_game_item(GameItem new_game_item)
     game_item_list.push_back(new_game_item);
 
     reload_game_list_grid();
+
+    update_game_list_file();
 }
 
 GameItem* MainWindow::get_selected_game_item()
@@ -187,4 +189,24 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
 {
     if (!ui->game_list->indexAt(event->pos()).isValid())
         ui->game_list->clearSelection();
+}
+
+void MainWindow::update_game_list_file(std::string_view file_stream)
+{
+    std::fstream game_list_file(file_stream.data());
+
+    if(!game_list_file.is_open())
+    {
+        game_list_file.open(file_stream.data(), std::fstream::in | std::fstream::out | std::fstream::trunc);
+
+        if(!game_list_file.is_open())
+            throw "[ERROR]: Unable to create file ! Leaving the program ...";
+    }
+    else
+    {
+        for(GameItem game_item : game_item_list)
+            game_list_file << std::string(game_item.m_name.toStdString() + " " + game_item.m_file_path.toStdString());
+    }
+
+    game_list_file.close();
 }
